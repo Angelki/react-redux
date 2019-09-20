@@ -80,6 +80,8 @@ export default class Subscription {
 
   trySubscribe() {
     if (!this.unsubscribe) {
+      // 构造的时候传入了parentSub 就调用parentSub.addNestedSub 
+      // 否则调用store的subscribe方法
       this.unsubscribe = this.parentSub
         ? this.parentSub.addNestedSub(this.handleChangeWrapper)
         : this.store.subscribe(this.handleChangeWrapper)

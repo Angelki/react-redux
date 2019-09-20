@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { ReactReduxContext } from './Context'
+import { ReactReduxContext } from './Context' // 其实就是create了一个context
 import Subscription from '../utils/Subscription'
 
 class Provider extends Component {
@@ -10,6 +10,7 @@ class Provider extends Component {
     const { store } = props
 
     this.notifySubscribers = this.notifySubscribers.bind(this)
+    // 以store为参数创建Subscription对象 订阅store对象
     const subscription = new Subscription(store)
     subscription.onStateChange = this.notifySubscribers
 
@@ -36,6 +37,7 @@ class Provider extends Component {
   }
 
   componentDidUpdate(prevProps) {
+    // 每次更新store更新state
     if (this.props.store !== prevProps.store) {
       this.state.subscription.tryUnsubscribe()
       const subscription = new Subscription(this.props.store)
